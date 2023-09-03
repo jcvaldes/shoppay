@@ -1,0 +1,6 @@
+export { default as Copyright } from './Copyright'
+export { default as Footer } from './Footer'
+export { default as Links } from './Links'
+export { default as NewsLetter } from './NewsLetter'
+export { default as Payment } from './Payment'
+export { default as Socials } from './Socials'
