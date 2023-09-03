@@ -19,7 +19,7 @@ const LoginInput: React.FC<LoginProps> = ({
   ...props
 }: LoginProps) => {
   // debugger
-  // const [field, itmeta] = useField({ ...props, type })
+  // const [field, meta] = useField({ ...props, type })
   return (
     <div className={styles.input}>
       {icon == 'user' ? (
