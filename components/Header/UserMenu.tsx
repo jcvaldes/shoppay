@@ -3,9 +3,10 @@ import React from 'react'
 import Link from 'next/link'
 import styles from './Header.module.scss'
 import { signIn, signOut } from 'next-auth/react'
+import { Session } from 'next-auth'
 
 export interface UserMenuProps {
-  session: { user: { name: string; image: string } }
+  session: Session | null
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({ session }: UserMenuProps) => {
@@ -20,13 +21,13 @@ const UserMenu: React.FC<UserMenuProps> = ({ session }: UserMenuProps) => {
             className={styles.menu__img}
           /> */}
           <img
-            src={session.user.image}
+            src={session.user?.image!}
             alt="avatar"
             className={styles.menu__img}
           />
           <div className={styles.col}>
             <span>Welcome Back,</span>
-            <h3>{session.user.name}</h3>
+            <h3>{session.user?.name}</h3>
             <span onClick={() => signOut()}>Sign out</span>
           </div>
         </div>

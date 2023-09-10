@@ -6,20 +6,17 @@
     box-sizing: border-box;
   }
 }
-
 body {
   font-family: sans-serif;
-  line-height: 1.5rem;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
-
 button,
 input,
-select,
-textarea {
+textarea,
+select {
   font: inherit;
 }
-
 p,
 h1,
 h2,
@@ -29,7 +26,6 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
-
 img,
 video,
 canvas,

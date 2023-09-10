@@ -16,6 +16,7 @@ export interface TopProps {
 const Top: React.FC<TopProps> = ({ country }: TopProps) => {
   // const [loggedIn, setLoggedIn] = useState(true)
   const { data: session } = useSession()
+
   const [visible, setVisible] = useState(false)
 
   return (
@@ -49,25 +50,21 @@ const Top: React.FC<TopProps> = ({ country }: TopProps) => {
             onMouseLeave={() => setVisible(false)}
           >
             {session ? (
-              <li className={styles.li}>
-                <div className={styles.flex}>
-                  {/* <img
+              <div className={styles.flex}>
+                {/* <img
                     src="https://www.pngarts.com/files/3/Avatar-PNG-Picture.png"
                     alt="avatar"
                   /> */}
-                  <img src={session.user!.image} alt="avatar" />
-                  <span>{session.user!.name}</span>
-                  <RiArrowDropDownFill />
-                </div>
-              </li>
+                <img src={session.user?.image!} alt="avatar" />
+                <span>{session.user!.name}</span>
+                <RiArrowDropDownFill />
+              </div>
             ) : (
-              <li className={styles.li}>
-                <div className={styles.flex}>
-                  <RiAccountPinCircleLine />
-                  <span>Account</span>
-                  <RiArrowDropDownFill />
-                </div>
-              </li>
+              <div className={styles.flex}>
+                <RiAccountPinCircleLine />
+                <span>Account</span>
+                <RiArrowDropDownFill />
+              </div>
             )}
             {visible && <UserMenu session={session} />}
           </li>

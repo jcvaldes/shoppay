@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import Links from './Links'
 import Socials from './Socials'
 import NewsLetter from './NewsLetter'
@@ -12,7 +12,13 @@ export interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({ country }: FooterProps) => {
-  return (
+  const isMounted = useRef(false)
+  useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true
+    }
+  }, [])
+  return isMounted.current ? (
     <footer className={styles.footer}>
       <div className={styles.footer__container}>
         <Links />
@@ -22,6 +28,8 @@ const Footer: React.FC<FooterProps> = ({ country }: FooterProps) => {
         <Copyright country={country} />
       </div>
     </footer>
+  ) : (
+    <></>
   )
 }
 
