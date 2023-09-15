@@ -9,12 +9,12 @@ jobs:
       - checkout
       - run:
           name: Update or install NPM
-          command: 'sudo npm install -g npm'
+          command: 'sudo npm install -g npm && sudo npm install -g yarn'
       - restore_cache:
           key: app-{{ checksum "package-lock.json" }}
       - run:
           name: Install Dependencies
-          command: npm install
+          command: yarn install
       - persist_to_workspace:
           root: .
           paths:
