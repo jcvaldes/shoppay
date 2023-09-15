@@ -8,7 +8,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Update or install NPM
+          name: Update or install NPMN
           command: 'sudo npm install -g npm'
       - restore_cache:
           key: app-{{ checksum "package-lock.json" }}
