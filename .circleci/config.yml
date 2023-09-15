@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           name: Update or install NPM
-          command: 'sudo npm install -g yarn'
+          command: 'sudo npm install -g npm'
       - restore_cache:
           key: app-{{ checksum "yarn.lock" }}
       - run:
