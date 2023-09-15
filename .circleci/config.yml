@@ -33,7 +33,7 @@ jobs:
           at: .
       - run:
           name: Vercel Prod Deploy
-          command: vercel --prod -n $VERCEL_PROJECT_NAME --token=$VERCEL_TOKEN --yes
+          command: vercel --prod --name $VERCEL_PROJECT_NAME --token=$VERCEL_TOKEN --yes
 workflows:
   version: 2
   deploy-reactapp:
