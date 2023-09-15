@@ -11,12 +11,12 @@ const nextConfig = {
       },
       {
         source: `/:path*`,
-        destination: `${PLATFORM_URL}/:path*`,
+        destination: `${process.env.NEXTAUTH_URL}/:path*`,
       },
     ]
   },
   env: {
-    NEXTAUTH_URL: 'https://devkingos-shopay-dev.vercel.app/',
+    NEXTAUTH_URL: 'https://devkingos-shopay-dev.vercel.app',
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
