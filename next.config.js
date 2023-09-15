@@ -3,6 +3,18 @@ const path = require('path')
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  rewrites: async () => {
+    return [
+      {
+        source: `/api/:path*`,
+        destination: `/api/:path*`,
+      },
+      {
+        source: `/:path*`,
+        destination: `${PLATFORM_URL}/:path*`,
+      },
+    ]
+  },
   env: {
     NEXTAUTH_URL: 'https://devkingos-shopay-dev.vercel.app/',
   },
