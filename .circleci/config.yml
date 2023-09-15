@@ -11,10 +11,10 @@ jobs:
           name: Update or install NPM
           command: 'sudo npm install -g npm'
       - restore_cache:
-          key: app-{{ checksum "yarn.lock" }}
+          key: app-{{ checksum "package-lock.json" }}
       - run:
           name: Install Dependencies
-          command: yarn install
+          command: npm install --force
       - persist_to_workspace:
           root: .
           paths:
