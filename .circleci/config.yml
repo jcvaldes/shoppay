@@ -8,13 +8,13 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Update or install NPMN
-          command: 'sudo npm install -g npm'
+          name: Update or install NPM
+          command: 'sudo npm install -g npm yarn'
       - restore_cache:
-          key: app-{{ checksum "package-lock.json" }}
+          key: app-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
-          command: npm install --force
+          command: yarn install --force
       - persist_to_workspace:
           root: .
           paths:
