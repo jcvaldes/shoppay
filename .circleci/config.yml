@@ -33,7 +33,7 @@ jobs:
           at: .
       - run:
           name: Vercel Prod Deploy
-          command: vercel --prod --build-env MONGODB_URL=mongodb+srv://jcvaldes:mlEUVkBHfZn5Xmjt@cluster0.kgn4b.mongodb.net/shoppay?retryWrites=true&w=majority --name $VERCEL_PROJECT_NAME --token=$VERCEL_TOKEN --yes
+          command: vercel --prod --name $VERCEL_PROJECT_NAME --token=$VERCEL_TOKEN --yes
 workflows:
   version: 2
   deploy-reactapp:
