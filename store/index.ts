@@ -26,5 +26,5 @@ const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production', // Habilitar herramientas de desarrollo si no estamos en producción
   middleware: [thunk], // Uso del middleware Redux Thunk para manejar acciones asíncronas
 })
-
+export type RootState = ReturnType<typeof store.getState>
 export default store

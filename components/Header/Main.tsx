@@ -6,11 +6,12 @@ import { FaOpencart } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 
 import styles from './Header.module.scss'
+import { RootState } from '@/store'
 
 export interface MainProps {}
 
 const Main: React.FC<MainProps> = () => {
-  const { cart } = useSelector((state) => ({ ...state }))
+  const { cart } = useSelector((state: RootState) => ({ ...state }))
   return (
     <div className={styles.main}>
       <div className={styles.main__container}>

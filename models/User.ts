@@ -26,7 +26,7 @@ export interface Address extends Document {
 }
 
 export interface Wishlist extends Document {
-  product: mongoose.Types.ObjectId
+  product: Schema.Types.ObjectId
   style: string
 }
 
@@ -48,7 +48,7 @@ const addressSchema = new Schema<Address>({
 
 const wishlistSchema = new Schema<Wishlist>({
   product: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Product',
   },
   style: String,
@@ -58,17 +58,20 @@ const userSchema = new Schema<User>(
   {
     name: {
       type: String,
-      required: 'Please enter your full name.',
+      required: true,
+      message: 'Please enter your full name.',
     },
     email: {
       type: String,
-      required: 'Please enter your email address.',
+      required: true,
+      message: 'Please enter your email address.',
       trim: true,
       unique: true,
     },
     password: {
       type: String,
-      required: 'Please enter a password.',
+      required: true,
+      message: 'Please enter a password.',
     },
     role: {
       type: String,
