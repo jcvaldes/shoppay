@@ -4,7 +4,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   env: {
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    NEXTAUTH_URL: 'https://devkingos-shopay-dev.vercel.app/',
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
