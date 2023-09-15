@@ -1,17 +1,17 @@
 {
-  "routes": [
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" },
     {
-      "src": "/api/auth/.*",
-      "dest": "/api/auth"
+      "source": "/api/auth/.*",
+      "destination": "/api/auth"
     },
     {
-      "src": "/api/auth/session",
-      "dest": "/api/auth/session.js"
+      "source": "/api/auth/session",
+      "destination": "/api/auth/session.js"
     },
     {
-      "src": ".*",
-      "dest": "/404.html"
+      "source": ".*",
+      "destination": "/404.html"
     }
-  ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  ]
 }
