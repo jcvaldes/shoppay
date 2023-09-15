@@ -3,7 +3,7 @@ const path = require('path')
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  rewrites: async () => {
+  async rewrites() {
     return [
       {
         source: `/api/:path*`,
