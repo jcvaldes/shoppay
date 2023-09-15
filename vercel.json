@@ -2,16 +2,16 @@
   "rewrites": [
     { "source": "/(.*)", "destination": "/" },
     {
-      "source": "/api/auth/.*",
-      "destination": "/api/auth"
+      "src": "/api/auth/.*",
+      "dest": "/api/auth"
     },
     {
-      "source": "/api/auth/session",
-      "destination": "/api/auth/session.js"
+      "src": "/api/auth/session",
+      "dest": "/api/auth/session.js"
     },
     {
-      "source": ".*",
-      "destination": "/404.html"
+      "src": ".*",
+      "dest": "/404.html"
     }
   ]
 }
