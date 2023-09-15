@@ -14,7 +14,7 @@ jobs:
           key: app-{{ checksum "package-lock.json" }}
       - run:
           name: Install Dependencies
-          command: npm install --force
+          command: npm install --legacy-peer-deps
       - persist_to_workspace:
           root: .
           paths:
