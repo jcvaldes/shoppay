@@ -40,10 +40,10 @@ export default NextAuth({
     strategy: 'jwt',
   },
   secret: process.env.JWT_SECRET,
-  callbacks: {
-    session({ session, token, user }) {
-      return session // The return type will match the one returned in `useSession()`
-    },
-  },
-  debug: true,
+  // callbacks: {
+  //   session({ session, token, user }) {
+  //     return session // The return type will match the one returned in `useSession()`
+  //   },
+  // },
+  debug: false,
 })

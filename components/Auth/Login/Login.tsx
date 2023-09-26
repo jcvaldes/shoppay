@@ -29,7 +29,6 @@ const loginValidation = Yup.object({
   login_password: Yup.string().required('Please enter a password'),
 })
 const Login: React.FC<LoginProps> = ({ providers }: LoginProps) => {
-  debugger
   const [user, setUser] = useState<FormValues>(initialValues)
   const { login_email, login_password } = user
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

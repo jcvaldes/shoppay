@@ -1,31 +1,39 @@
 import React, { useState } from 'react'
-import { Form, Formik } from 'formik'
+import { Form, Formik, FormikErrors } from 'formik'
 import { LoginInput } from '@/components/Inputs/LoginInput'
 import { CircledIconBtn } from '@/components/Buttons/CircledIconBtn'
 import { BiRightArrowAlt } from 'react-icons/bi'
+import axios from 'axios'
+
 import * as Yup from 'yup'
 import styles from '@/styles/Signin.module.scss'
+import DotLoaderSpinner from '@/components/Loaders/DotLoader/DotLoader'
+import Router from 'next/router'
 
 export interface RegisterProps {}
 
 interface FormValues {
-  full_name: string
+  name: string
   email: string
   password: string
   conf_password: string
+  success: any
+  error: any
 }
 
 const initialValues: FormValues = {
-  full_name: '',
+  name: '',
   email: '',
   password: '',
   conf_password: '',
+  success: '',
+  error: '',
 }
 const registerValidation = Yup.object({
-  full_name: Yup.string()
+  name: Yup.string()
     .required('Full Name is required')
     .min(2, 'First name must be between 2 and 16 characters')
-    .max(16, 'First name must be between 2 and 16 characters')
+    .max(25, 'First name must be between 2 and 25 characters')
     .matches(/^[aA-zZ]/, 'Numbers and special characters are not allowed'),
 
   email: Yup.string()
@@ -44,76 +52,117 @@ const registerValidation = Yup.object({
     .oneOf([Yup.ref('password')], 'Passwords must match'),
 })
 const Register: React.FC<RegisterProps> = () => {
+  const [loading, setLoading] = useState(false)
   const [user, setUser] = useState<FormValues>(initialValues)
-  const { full_name, email, password, conf_password } = user
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const signUpHandler = async (values: FormValues) => {
+    const { name, email, password, conf_password, error, success } = values
+    try {
+      setLoading(true)
+      const { data } = await axios.post('/api/auth/signup', {
+        name,
+        email,
+        password,
+      })
+      setUser({ ...values, error: '', success: data.message })
+      setLoading(false)
+      Router.push('/')
+    } catch (error: any) {
+      setLoading(false)
+      setUser({ ...values, success: '', error: error.response.data.message })
+    }
+  }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setFieldValue: (
+      field: string,
+      value: any,
+      shouldValidate?: boolean | undefined,
+    ) => Promise<void | FormikErrors<FormValues>>,
+  ) => {
     const { name, value } = e.target
-    setUser({ ...user, [name]: value })
+    // setUser({ ...user, [name]: value })
+    setFieldValue(name, value)
   }
   return (
-    <div className={styles.login__container}>
-      <div className={styles.login__form}>
-        <h1>Sign Up</h1>
-        <p>Get access to one of the best eshopping services in the world</p>
-        <Formik
-          enableReinitialize
-          initialValues={initialValues}
-          validationSchema={registerValidation}
-          onSubmit={(values) => {
-            // Aquí puedes manejar la lógica de envío de formulario
-            console.log(values)
-          }}
-        >
-          {(form) => (
-            <Form>
-              <LoginInput
-                type="text"
-                name="full_name"
-                id="full_name"
-                icon="user"
-                placeholder="Full Name"
-                onChange={handleChange}
-                autoComplete="off"
-              />
-              <LoginInput
-                type="text"
-                name="email"
-                id="email"
-                icon="email"
-                placeholder="Email Address"
-                onChange={handleChange}
-                autoComplete="off"
-              />
-              <LoginInput
-                type="password"
-                name="password"
-                id="password"
-                icon="password"
-                placeholder="Password"
-                onChange={handleChange}
-                autoComplete="off"
-              />
-              <LoginInput
-                type="password"
-                name="password"
-                id="password"
-                icon="password"
-                placeholder="Re-Type Password"
-                onChange={handleChange}
-                autoComplete="off"
-              />
+    <>
+      {loading && <DotLoaderSpinner loading={loading} />}
 
-              <CircledIconBtn
-                type="submit"
-                icon={<BiRightArrowAlt />}
-                text={'Sign Up'}
-              />
-            </Form>
-          )}
-        </Formik>
+      <div className={styles.login__container}>
+        <div className={styles.login__form}>
+          <h1>Sign Up</h1>
+          <p>Get access to one of the best eshopping services in the world</p>
+          <Formik
+            enableReinitialize
+            initialValues={initialValues}
+            validationSchema={registerValidation}
+            onSubmit={(values) => {
+              signUpHandler(values)
+              // Aquí puedes manejar la lógica de envío de formulario
+              console.log(values)
+            }}
+          >
+            {(form) => {
+              return (
+                <>
+                  <pre>{JSON.stringify(form.values, null, 2)}</pre>
+                  <Form>
+                    <LoginInput
+                      type="text"
+                      label="name"
+                      name="name"
+                      id="name"
+                      icon="user"
+                      placeholder="Full Name"
+                      onChange={(e) => handleChange(e, form.setFieldValue)}
+                    />
+                    <LoginInput
+                      type="text"
+                      label="email"
+                      name="email"
+                      id="email"
+                      icon="email"
+                      placeholder="Email Address"
+                      onChange={(e) => handleChange(e, form.setFieldValue)}
+                    />
+                    <LoginInput
+                      type="password"
+                      label="password"
+                      name="password"
+                      id="password"
+                      icon="password"
+                      placeholder="Password"
+                      onChange={(e) => handleChange(e, form.setFieldValue)}
+                    />
+                    <LoginInput
+                      type="password"
+                      label="conf_password"
+                      name="conf_password"
+                      id="conf_password"
+                      icon="password"
+                      placeholder="Re-Type Password"
+                      onChange={(e) => handleChange(e, form.setFieldValue)}
+                    />
+                    <CircledIconBtn
+                      type="submit"
+                      icon={<BiRightArrowAlt />}
+                      text={'Sign Up'}
+                    />
+                  </Form>
+                </>
+              )
+            }}
+          </Formik>
+          <div>
+            {user.success && (
+              <span className={styles.success}>{user.success}</span>
+            )}
+          </div>
+          <div>
+            {user.error && <span className={styles.error}>{user.error}</span>}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
