@@ -104,7 +104,6 @@ const Register: React.FC<RegisterProps> = () => {
             {(form) => {
               return (
                 <>
-                  <pre>{JSON.stringify(form.values, null, 2)}</pre>
                   <Form>
                     <LoginInput
                       type="text"
@@ -113,7 +112,9 @@ const Register: React.FC<RegisterProps> = () => {
                       id="name"
                       icon="user"
                       placeholder="Full Name"
-                      onChange={(e) => handleChange(e, form.setFieldValue)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        handleChange(e, form.setFieldValue)
+                      }
                     />
                     <LoginInput
                       type="text"
@@ -122,7 +123,9 @@ const Register: React.FC<RegisterProps> = () => {
                       id="email"
                       icon="email"
                       placeholder="Email Address"
-                      onChange={(e) => handleChange(e, form.setFieldValue)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        handleChange(e, form.setFieldValue)
+                      }
                     />
                     <LoginInput
                       type="password"
@@ -131,7 +134,9 @@ const Register: React.FC<RegisterProps> = () => {
                       id="password"
                       icon="password"
                       placeholder="Password"
-                      onChange={(e) => handleChange(e, form.setFieldValue)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        handleChange(e, form.setFieldValue)
+                      }
                     />
                     <LoginInput
                       type="password"
@@ -140,7 +145,9 @@ const Register: React.FC<RegisterProps> = () => {
                       id="conf_password"
                       icon="password"
                       placeholder="Re-Type Password"
-                      onChange={(e) => handleChange(e, form.setFieldValue)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        handleChange(e, form.setFieldValue)
+                      }
                     />
                     <CircledIconBtn
                       type="submit"
