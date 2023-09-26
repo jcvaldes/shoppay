@@ -63,6 +63,7 @@ const Login: React.FC<LoginProps> = ({ providers }: LoginProps) => {
               <LoginInput
                 type="text"
                 name="login_email"
+                label="login_email"
                 id="login_email"
                 icon="email"
                 placeholder="Email Address"
@@ -72,6 +73,7 @@ const Login: React.FC<LoginProps> = ({ providers }: LoginProps) => {
               <LoginInput
                 type="password"
                 name="login_password"
+                label="login_password"
                 id="login_password"
                 icon="password"
                 placeholder="Password"
