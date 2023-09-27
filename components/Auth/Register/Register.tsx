@@ -17,8 +17,8 @@ interface FormValues {
   email: string
   password: string
   conf_password: string
-  success: any
-  error: any
+  success: string
+  error: string
 }
 
 const initialValues: FormValues = {

@@ -40,7 +40,7 @@ export default function SigninPage({ providers }: Props) {
   return (
     <Layout title="Login" country={country}>
       <div className={styles.login}>
-        <Login providers={providers} />
+        <Login providers={providers} callbackUrl={'/'} />
         <Register />
       </div>
     </Layout>
