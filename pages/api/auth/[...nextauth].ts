@@ -78,8 +78,11 @@ export default NextAuth({
   },
   session: {
     strategy: 'jwt',
+    // maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 3600,
   },
-  secret: process.env.JWT_SECRET,
+  secret: process.env.NEXT_PUBLIC_SECRET,
+
   // callbacks: {
   //   session({ session, token, user }) {
   //     return session // The return type will match the one returned in `useSession()`
