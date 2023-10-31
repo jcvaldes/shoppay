@@ -32,7 +32,6 @@ export const sendEmail = async (
   })
   const accessToken = await oauth2Client.getAccessToken()
 
-  debugger
   const transporter = nodemailer.createTransport(
     smtpTransport({
       service: 'gmail',
@@ -62,7 +61,6 @@ export const sendEmail = async (
     html: activateEmailTemplate(to, url),
   }
   transporter.sendMail(mailOptions, (err, infos) => {
-    debugger
     if (err) {
       console.log(err)
       return true

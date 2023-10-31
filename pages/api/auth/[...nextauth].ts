@@ -28,6 +28,7 @@ interface AuthorizeParams {
     /* Define el tipo específico de req aquí */
   }
 }
+db.connectDb()
 export default NextAuth({
   adapter: MongoDBAdapter(clientPromise) as Adapter,
   providers: [
@@ -73,6 +74,14 @@ export default NextAuth({
       issuer: process.env.AUTH0_ISSUER!,
     }),
   ],
+  callbacks: {
+    async session({ session, token }) {
+      let user = await User.findById(token.sub)
+      session.user!.id = token.sub || user._id.toString()
+      session.user!.role = token.role || 'user'
+      return session
+    },
+  },
   pages: {
     signIn: '/signin',
   },
@@ -93,8 +102,7 @@ export default NextAuth({
 
 const SignInUser = async ({ password, email }: Credentials) => {
   // Check if email and password is entered
-  debugger
-  await db.connectDb()
+
   if (!email || !password) {
     throw new Error('Please enter email or password')
   }
@@ -109,6 +117,6 @@ const SignInUser = async ({ password, email }: Credentials) => {
   if (!isPasswordMatched) {
     throw new Error('Invalid Email or Password')
   }
-  await db.disconnectDb()
+  // await db.disconnectDb()
   return user
 }

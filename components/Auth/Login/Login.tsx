@@ -15,6 +15,7 @@ import DotLoaderSpinner from '@/components/Loaders/DotLoader/DotLoader'
 export interface LoginProps {
   providers: OAuthProvider[]
   callbackUrl: string
+  csrfToken: string
 }
 interface FormValues {
   login_email: string
@@ -38,6 +39,7 @@ const loginValidation = Yup.object({
 const Login: React.FC<LoginProps> = ({
   providers,
   callbackUrl,
+  csrfToken,
 }: LoginProps) => {
   const [user, setUser] = useState<FormValues>(initialValues)
   const [loading, setLoading] = useState(false)
@@ -100,51 +102,62 @@ const Login: React.FC<LoginProps> = ({
             onSubmit={(values) => {
               signInHandler(values)
               // Aquí puedes manejar la lógica de envío de formulario
-              console.log(values)
+              // console.log(values)
             }}
           >
-            {(form) => (
-              <>
-                <Form>
-                  <LoginInput
-                    type="text"
-                    name="login_email"
-                    label="login_email"
-                    id="login_email"
-                    icon="email"
-                    placeholder="Email Address"
-                    onChange={handleChange}
-                    autoComplete="off"
-                  />
-                  <LoginInput
-                    type="password"
-                    name="login_password"
-                    label="login_password"
-                    id="login_password"
-                    icon="password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                    autoComplete="off"
-                  />
-                  <CircledIconBtn
-                    type="submit"
-                    icon={<BiRightArrowAlt />}
-                    text={'Sign In'}
-                  />
-                  {user.error && (
-                    <span className={styles.error}>{user.error}</span>
-                  )}
-                  <div className={styles.forgot}>
-                    <Link href="/auth/forgot">Forgot password ?</Link>
-                  </div>
-                </Form>
-              </>
-            )}
+            {(form) => {
+              return (
+                <>
+                  <Form method="post" action="/api/auth/signin/email">
+                    <input
+                      type="hidden"
+                      name="csrfToken"
+                      defaultValue={csrfToken}
+                    />
+                    <LoginInput
+                      type="text"
+                      name="login_email"
+                      label="login_email"
+                      id="login_email"
+                      icon="email"
+                      placeholder="Email Address"
+                      onChange={handleChange}
+                      autoComplete="off"
+                    />
+                    <LoginInput
+                      type="password"
+                      name="login_password"
+                      label="login_password"
+                      id="login_password"
+                      icon="password"
+                      placeholder="Password"
+                      onChange={handleChange}
+                      autoComplete="off"
+                    />
+                    <CircledIconBtn
+                      type="submit"
+                      icon={<BiRightArrowAlt />}
+                      text={'Sign In'}
+                    />
+                    {user.error && (
+                      <span className={styles.error}>{user.error}</span>
+                    )}
+                    <div className={styles.forgot}>
+                      <Link href="/auth/forgot">Forgot password ?</Link>
+                    </div>
+                  </Form>
+                </>
+              )
+            }}
           </Formik>
           <div className={styles.login__socials}>
             <span className={styles.or}>Or continue with</span>
             <div className={styles.login__socials_wrap}>
               {providers.map((provider: any) => {
+                if (provider.name === 'Credentials') {
+                  return
+                }
+                debugger
                 return (
                   <div key={provider.name}>
                     <button
