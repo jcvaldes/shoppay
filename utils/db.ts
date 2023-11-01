@@ -1,5 +1,4 @@
 import mongoose, { Connection, ConnectOptions } from 'mongoose'
-import { ConnectionOptions } from 'tls'
 
 interface ConnectionStatus {
   isConnected: boolean
@@ -23,7 +22,7 @@ export async function connectDb(): Promise<void> {
   const db = await mongoose.connect(process.env.MONGODB_URL!, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  } as ConnectionOptions)
+  } as ConnectOptions)
   console.log('New connection to the database')
   connection.isConnected = db.connections[0].readyState === 1
 }
