@@ -76,7 +76,7 @@ export default NextAuth({
   //     return session // The return type will match the one returned in `useSession()`
   //   },
   // },
-  debug: false,
+  debug: true,
 })
 
 const SignInUser = async ({ password, email }: Credentials) => {
