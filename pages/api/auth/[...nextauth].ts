@@ -30,6 +30,12 @@ interface AuthorizeParams {
 }
 db.connectDb()
 export default NextAuth({
+  session: {
+    strategy: 'jwt',
+    // maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 3600,
+  },
+  secret: process.env.NEXT_PUBLIC_SECRET,
   adapter: MongoDBAdapter(clientPromise) as Adapter,
   providers: [
     CredentialsProvider({
@@ -85,12 +91,6 @@ export default NextAuth({
   pages: {
     signIn: '/signin',
   },
-  session: {
-    strategy: 'jwt',
-    // maxAge: 30 * 24 * 60 * 60, // 30 days
-    maxAge: 3600,
-  },
-  secret: process.env.NEXT_PUBLIC_SECRET,
 
   // callbacks: {
   //   session({ session, token, user }) {

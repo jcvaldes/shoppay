@@ -15,9 +15,9 @@ const nextConfig = {
   //     },
   //   ]
   // },
-  env: {
-    NEXTAUTH_URL: 'https://devkingos-shopay-dev.vercel.app',
-  },
+  // env: {
+  //   NEXTAUTH_URL: 'https://devkingos-shopay-dev.vercel.app',
+  // },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
     prependData: `@import "./base.scss";`, // puede usar este scss en todos los archivos
