@@ -12,8 +12,7 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
-  console.log(session)
-  debugger
+  console.log('app llego')
   return (
     <>
       <Head>
