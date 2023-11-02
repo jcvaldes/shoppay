@@ -13,6 +13,7 @@ export default function App({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   console.log(session)
+  debugger
   return (
     <>
       <Head>
