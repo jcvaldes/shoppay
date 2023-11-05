@@ -1,14 +1,9 @@
-import Head from 'next/head'
-import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import { Header } from '@/components/Header'
-import Footer from '@/components/Footer/Footer'
 import axios from 'axios'
 import { Country } from '@/models/country.model'
 import { GetServerSideProps } from 'next'
 import { useSession } from 'next-auth/react'
 import { Layout } from '@/components/Layout'
-import { Session } from 'next-auth'
 
 const inter = Inter({ subsets: ['latin'] })
 interface Props {

@@ -1,11 +1,8 @@
 import Head from 'next/head'
 import React, { PropsWithChildren } from 'react'
-import { useSession } from 'next-auth/react'
 import { Footer } from '../Footer'
 import { Header } from '../Header'
 import { Country } from '@/models/country.model'
-import { GetServerSideProps } from 'next'
-import axios from 'axios'
 
 export interface LayoutProps {
   title: string

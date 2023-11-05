@@ -7,7 +7,8 @@ import { OAuthProvider } from 'next-auth/providers'
 import { Register } from '@/components/Auth/Register'
 import styles from '@/styles/Signin.module.scss'
 import { Login } from '@/components/Auth/Login'
-
+import { getServerSession } from 'next-auth'
+import { authOptions } from './api/auth/[...nextauth]'
 interface Props {
   providers: OAuthProvider[]
   callbackUrl: string
@@ -30,6 +31,7 @@ export default function SigninPage({
   callbackUrl,
   csrfToken,
 }: Props) {
+  console.log({ providers, callbackUrl, csrfToken })
   let country = {
     name: 'Argentina',
     flag: 'https://cdn.ipregistry.co/flags/emojitwo/ar.svg',
@@ -53,8 +55,11 @@ export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext,
 ) => {
   // const session = (await getSession(context)) as CustomSession
-  const { req, query } = context
-  const session = await getSession({ req })
+  const { req, res, query } = context
+  console.log('session')
+  const session = await getServerSession(req, res, authOptions)
+  debugger
+  console.log(session)
   const { callbackUrl } = query
   if (session) {
     return {

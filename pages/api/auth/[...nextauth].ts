@@ -29,14 +29,7 @@ interface AuthorizeParams {
   }
 }
 db.connectDb()
-export default NextAuth({
-  session: {
-    strategy: 'jwt',
-    // maxAge: 30 * 24 * 60 * 60, // 30 days
-    maxAge: 3600,
-  },
-  secret: process.env.NEXTAUTH_SECRET,
-  adapter: MongoDBAdapter(clientPromise) as Adapter,
+export const authOptions = {
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
@@ -53,7 +46,7 @@ export default NextAuth({
         // Add logic here to look up the user from the credentials supplied
         const email = credentials?.email
         const password = credentials?.password
-
+        console.log('signinuser')
         // Any object returned will be saved in `user` property of the JWT
         return SignInUser({ password, email }) // Cast to the User type
       },
@@ -80,6 +73,16 @@ export default NextAuth({
     //   issuer: process.env.AUTH0_ISSUER!,
     // }),
   ],
+}
+export default NextAuth({
+  session: {
+    strategy: 'jwt',
+    // maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 3600,
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  adapter: MongoDBAdapter(clientPromise) as Adapter,
+  ...authOptions,
   callbacks: {
     async session({ session, token }) {
       let user = await User.findById(token.sub)
@@ -92,11 +95,6 @@ export default NextAuth({
     signIn: '/signin',
   },
 
-  // callbacks: {
-  //   session({ session, token, user }) {
-  //     return session // The return type will match the one returned in `useSession()`
-  //   },
-  // },
   debug: false,
 })
 
@@ -109,6 +107,7 @@ const SignInUser = async ({ password, email }: Credentials) => {
   // Find user in the database
   const user = await User.findOne({ email }).select('+password')
   if (!user) {
+    console.log('This email does not exist')
     throw new Error('This email does not exist')
   }
   // Check if password is correct or not
