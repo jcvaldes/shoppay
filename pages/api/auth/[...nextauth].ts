@@ -75,12 +75,12 @@ export const authOptions = {
   ],
 }
 export default NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
     // maxAge: 30 * 24 * 60 * 60, // 30 days
     maxAge: 3600,
   },
-  secret: process.env.NEXTAUTH_SECRET,
   adapter: MongoDBAdapter(clientPromise) as Adapter,
   ...authOptions,
   callbacks: {
@@ -95,8 +95,6 @@ export default NextAuth({
   pages: {
     signIn: '/signin',
   },
-
-  debug: false,
 })
 
 const SignInUser = async ({ password, email }: Credentials) => {
