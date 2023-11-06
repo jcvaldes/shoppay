@@ -52,8 +52,8 @@ export const authOptions = {
       },
     }),
     GithubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
+      clientId: process.env.GITHB_ID!,
+      clientSecret: process.env.GITHB_SECRET!,
     }),
     TwitterProvider({
       clientId: process.env.TWITTER_ID!,

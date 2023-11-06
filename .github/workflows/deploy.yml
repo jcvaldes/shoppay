@@ -23,8 +23,8 @@ jobs:
           NEXTAUTH_SECRET: ${{secrets.NEXTAUTH_SECRET}}
           NEXTAUTH_URL: ${{secrets.NEXTAUTH_URL}}
           BASE_URL: ${{secrets.BASE_URL}}
-          GITHUB_ID: ${{secrets.GITHUB_ID}}
-          GITHUB_SECRET: ${{secrets.GITHUB_SECRET}}
+          GITHB_ID: ${{secrets.GITHB_ID}}
+          GITHB_SECRET: ${{secrets.GITHB_SECRET}}
           GOOGLE_ID: ${{secrets.GOOGLE_ID}}
           GOOGLE_SECRET: ${{secrets.GOOGLE_SECRET}}
           TWITTER_ID: ${{secrets.TWITTER_ID}}
