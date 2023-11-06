@@ -6,13 +6,18 @@ on:
       - develop
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-
+    env:
+      NEXTJS_DIST: out
     steps:
       - uses: actions/checkout@v2
-      - run: npm install
-      - run: npm run build
+      - name: Install Yarn
+        run: npm install -g yarn
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Build Static Website
+        run: yarn build
         env:
           MONGODB_URL: ${{secrets.MONGODB_URL}}
           NEXTAUTH_SECRET: ${{secrets.NEXTAUTH_SECRET}}
@@ -36,7 +41,8 @@ jobs:
           ACTIVATION_TOKEN_SECRET: ${{secrets.ACTIVATION_TOKEN_SECRET}}
           PRODUCTION_DOMAIN: ${{secrets.PRODUCTION_DOMAIN}}
       - uses: shinyinc/action-aws-cli@v1.2
-      - run: aws s3 sync .next s3://${{ secrets.AWS_S3_BUCKET_NAME }}/shopay/latest
+      - name: Deploy to S3
+        run: aws s3 sync .next s3://${{ secrets.AWS_S3_BUCKET_NAME }}/shopay/latest
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
