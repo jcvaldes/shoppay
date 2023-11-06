@@ -85,6 +85,7 @@ export default NextAuth({
   ...authOptions,
   callbacks: {
     async session({ session, token }) {
+      console.log({ session, token })
       let user = await User.findById(token.sub)
       session.user!.id = token.sub || user._id.toString()
       session.user!.role = token.role || 'user'
