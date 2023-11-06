@@ -14,6 +14,7 @@ jobs:
       - run: npm install
       - run: npm run build
         env:
+          MONGODB_URL: ${{secrets.MONGODB_URL}}
           PRODUCTION_DOMAIN: ${{secrets.PRODUCTION_DOMAIN}}
       - uses: shinyinc/action-aws-cli@v1.2
       - run: aws s3 sync .next s3://${{ secrets.AWS_S3_BUCKET_NAME }}/shopay/latest
