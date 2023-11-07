@@ -157,7 +157,6 @@ const Login: React.FC<LoginProps> = ({
                 if (provider.name === 'Credentials') {
                   return
                 }
-                debugger
                 return (
                   <div key={provider.name}>
                     <button
