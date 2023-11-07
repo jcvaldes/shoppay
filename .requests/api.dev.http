@@ -3,7 +3,7 @@ POST {{url}}/auth/signup
 Content-Type: application/json
 
 {
-  "full_name": "Joaquin",
+  "name": "Joaquin",
   "email": "idevkings@gmail.com",
   "password": "1234567"
 }

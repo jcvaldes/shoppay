@@ -29,7 +29,14 @@ interface AuthorizeParams {
   }
 }
 db.connectDb()
-export const authOptions = {
+export default NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: 'jwt',
+    // maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 3600,
+  },
+  adapter: MongoDBAdapter(clientPromise) as Adapter,
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
@@ -73,16 +80,6 @@ export const authOptions = {
       issuer: process.env.AUTH0_ISSUER!,
     }),
   ],
-}
-export default NextAuth({
-  secret: process.env.NEXTAUTH_SECRET,
-  session: {
-    strategy: 'jwt',
-    // maxAge: 30 * 24 * 60 * 60, // 30 days
-    maxAge: 3600,
-  },
-  adapter: MongoDBAdapter(clientPromise) as Adapter,
-  ...authOptions,
   callbacks: {
     async session({ session, token }) {
       console.log({ session, token })
@@ -99,7 +96,7 @@ export default NextAuth({
 
 const SignInUser = async ({ password, email }: Credentials) => {
   // Check if email and password is entered
-
+  // await db.connectDb()
   if (!email || !password) {
     throw new Error('Please enter email or password')
   }

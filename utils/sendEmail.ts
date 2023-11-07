@@ -44,7 +44,7 @@ export const sendEmail = async (
         // si la cuenta de google esta configurada para usar oauth2
         // para permitir aplicaciones menos seguras no esta mas disponible
         // es necesario crear un password para aplicación.
-        pass: 'zfjtpnohhyxtfppo',
+        pass: 'rsagnslkirqnvpwm', // rsag nslk irqn vpwm
         clientId: MAILING_SERVICE_CLIENT_ID,
         clientSecret: MAILING_SERVICE_CLIENT_SECRET,
         // para cambiarlo ir a https://developers.google.com/oauthplayground y

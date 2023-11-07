@@ -12,7 +12,7 @@ interface Props {
 
 export default function Home({ country }: Props) {
   const { data: session } = useSession()
-
+  debugger
   return (
     <div>
       {/* <Header country={country} /> */}
