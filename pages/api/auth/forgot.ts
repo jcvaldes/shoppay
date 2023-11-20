@@ -36,13 +36,13 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
     console.log('end find one user')
     console.log('create reset token')
 
-    const token = createResetToken({
+    const userId = createResetToken({
       id: user._id.toString(),
     })
     console.log('end create reset token')
     console.log({ id: user._id.toString() })
-
-    const url = `${process.env.BASE_URL}/auth/reset/${token}`
+    console.log({ resetToken: userId })
+    const url = `${process.env.BASE_URL}/auth/reset/${userId}`
     console.log('email por enviar de reset password')
     sendEmail(email, url, '', 'Reset your password.', resetEmailTemplate)
     // res.send(url)
