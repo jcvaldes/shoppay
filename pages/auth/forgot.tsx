@@ -37,20 +37,3 @@ export default function ForgotPage({ csrfToken }: Props) {
     </Layout>
   )
 }
-
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext,
-) => {
-  const csrfToken = await getCsrfToken(context)
-  console.log(csrfToken)
-  const providers = await getProviders()
-  // Convierte el objeto de proveedores en un array de objetos
-  const providerList = Object.keys(providers!).map((key) => ({
-    ...providers![key],
-    id: key,
-  }))
-
-  return {
-    props: { csrfToken },
-  }
-}
