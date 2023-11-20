@@ -31,6 +31,7 @@ export const sendEmail = async (
   oauth2Client.setCredentials({
     refresh_token: MAILING_SERVICE_REFRESH_TOKEN,
   })
+  console.log('refresh token')
   console.log({
     MAILING_SERVICE_REFRESH_TOKEN,
   })
