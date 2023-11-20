@@ -28,6 +28,12 @@ export const sendEmail = async (
   subject: string,
   template: Function,
 ) => {
+  console.log({
+    template,
+    subject,
+    to,
+    url,
+  })
   oauth2Client.setCredentials({
     refresh_token: MAILING_SERVICE_REFRESH_TOKEN,
   })
