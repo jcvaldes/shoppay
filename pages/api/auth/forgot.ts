@@ -36,7 +36,7 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
     console.log('end find one user')
     console.log('create reset token')
 
-    const userId = createResetToken({
+    const userId = createdActivationToken({
       id: user._id.toString(),
     })
     console.log('end create reset token')
