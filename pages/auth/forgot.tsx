@@ -32,7 +32,7 @@ export default function ForgotPage({ csrfToken }: Props) {
   return (
     <Layout title="Forgot" country={country}>
       <div className={styles.login}>
-        <Forgot csrfToken={csrfToken} />
+        <Forgot />
       </div>
     </Layout>
   )

@@ -10,10 +10,6 @@ import { CircledIconBtn } from '@/components/Buttons/CircledIconBtn'
 import Router from 'next/router'
 import styles from '@/styles/Forgot.module.scss'
 
-interface Props {
-  csrfToken: string
-}
-
 const initialValues: FormikValues = {
   email: '',
   success: '',
@@ -26,7 +22,7 @@ const forgotValidation = Yup.object({
     )
     .email('Please enter a valid email address'),
 })
-const Forgot: React.FC<Props> = ({ csrfToken }: Props) => {
+const Forgot: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState<FormikValues>(initialValues)
   const handleChange = (
@@ -43,7 +39,7 @@ const Forgot: React.FC<Props> = ({ csrfToken }: Props) => {
   }
 
   const forgotHandler = async (values: any) => {
-    const { email, error, success } = values
+    const { email } = values
 
     try {
       setLoading(true)
