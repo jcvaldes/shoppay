@@ -4,7 +4,7 @@ import db from '@/utils/db'
 import { validateEmail } from '@/utils/validation'
 import User from '@/models/User'
 import bcrypt from 'bcrypt'
-import { createResetToken, createdActivationToken } from '@/utils/tokens'
+import { createResetToken } from '@/utils/tokens'
 import { sendEmail } from '@/utils/sendEmail'
 import { resetEmailTemplate } from '@/emails/resetEmailTemplate'
 
