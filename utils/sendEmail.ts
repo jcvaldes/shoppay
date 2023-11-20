@@ -41,6 +41,7 @@ export const sendEmail = async (
   console.log({
     MAILING_SERVICE_REFRESH_TOKEN,
   })
+  console.log('get access token')
   const accessToken = await oauth2Client.getAccessToken()
   console.log({ accessToken })
 
