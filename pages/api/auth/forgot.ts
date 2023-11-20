@@ -18,6 +18,8 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await db.connectDb()
     const { email }: RequestBody = req.body
+    console.log('email listo')
+    console.log({ email })
 
     if (!email) {
       return res.status(400).json({ message: 'Please fill in all fields.' })
@@ -30,10 +32,11 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
     if (!user) {
       return res.status(400).json({ message: 'This email does not exist.' })
     }
-    const userId = createResetToken({
+    const token = createResetToken({
       id: user._id.toString(),
     })
-    const url = `${process.env.BASE_URL}/auth/reset/${userId}`
+    const url = `${process.env.BASE_URL}/auth/reset/${token}`
+    console.log('email por enviar de reset password')
     sendEmail(email, url, '', 'Reset your password.', resetEmailTemplate)
     // res.send(url)
     await db.disconnectDb()
