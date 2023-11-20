@@ -35,7 +35,9 @@ export const sendEmail = async (
     MAILING_SERVICE_REFRESH_TOKEN,
   })
   const accessToken = await oauth2Client.getAccessToken()
+  console.log({ accessToken })
 
+  console.log('create transporter')
   const transporter = nodemailer.createTransport(
     smtpTransport({
       service: 'gmail',
