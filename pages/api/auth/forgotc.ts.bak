@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { createRouter, expressWrapper } from 'next-connect'
+import { createRouter } from 'next-connect'
 import db from '@/utils/db'
 import { validateEmail } from '@/utils/validation'
 import User from '@/models/User'
@@ -18,25 +18,37 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await db.connectDb()
     const { email }: RequestBody = req.body
+    console.log('email listo')
+    console.log({ email })
 
     if (!email) {
       return res.status(400).json({ message: 'Please fill in all fields.' })
     }
+    console.log('valid email')
     if (!validateEmail(email)) {
       return res.status(400).json({ message: 'Invalid email' })
     }
+    console.log('find one user')
     const user = await User.findOne({ email })
     if (!user) {
       return res.status(400).json({ message: 'This email does not exist.' })
     }
+    console.log('end find one user')
+    console.log('create reset token')
 
-    const reset_token = createResetToken({
+    const userId = createdActivationToken({
       id: user._id.toString(),
     })
-    const url = `${process.env.BASE_URL}/auth/reset/${reset_token}`
+    console.log('end create reset token')
+    console.log({ id: user._id.toString() })
+    console.log({ resetToken: userId })
+    const url = `${process.env.BASE_URL}/auth/reset/${userId}`
+    console.log('email por enviar de reset password')
     sendEmail(email, url, '', 'Reset your password.', resetEmailTemplate)
     // res.send(url)
+    console.log('envio email')
     await db.disconnectDb()
+    console.log('email enviado')
     res.json({
       message: 'An email has been sent to you, use it to reset your password',
     })
