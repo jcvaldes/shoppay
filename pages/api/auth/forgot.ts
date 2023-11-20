@@ -39,7 +39,9 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
     console.log('email por enviar de reset password')
     sendEmail(email, url, '', 'Reset your password.', resetEmailTemplate)
     // res.send(url)
+    console.log('envio email')
     await db.disconnectDb()
+    console.log('email enviado')
     res.json({
       message: 'An email has been sent to you, use it to reset your password',
     })

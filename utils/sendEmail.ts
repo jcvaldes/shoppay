@@ -31,6 +31,9 @@ export const sendEmail = async (
   oauth2Client.setCredentials({
     refresh_token: MAILING_SERVICE_REFRESH_TOKEN,
   })
+  console.log({
+    MAILING_SERVICE_REFRESH_TOKEN,
+  })
   const accessToken = await oauth2Client.getAccessToken()
 
   const transporter = nodemailer.createTransport(
@@ -61,7 +64,10 @@ export const sendEmail = async (
     subject: subject,
     html: template(to, url),
   }
+  console.log('sendemail')
+  console.log(mailOptions)
   transporter.sendMail(mailOptions, (err, infos) => {
+    console.log({ err })
     if (err) {
       console.log(err)
       return true
