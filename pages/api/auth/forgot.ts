@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { createRouter, expressWrapper } from 'next-connect'
+import { createRouter } from 'next-connect'
 import db from '@/utils/db'
 import { validateEmail } from '@/utils/validation'
 import User from '@/models/User'
