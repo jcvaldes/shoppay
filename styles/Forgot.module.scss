@@ -2,6 +2,11 @@
   min-height: calc(100vh - 540px);
   display: grid;
   place-items: center;
+  &__container {
+    display: grid;
+    place-items: center;
+    padding: 3rem;
+  }
   &__header {
     display: flex;
     align-items: center;

@@ -1,52 +1,29 @@
-import React, { useState } from 'react'
-import styles from './styles/Forgot.module.scss'
+/* eslint-disable @next/next/no-img-element */
 import { Layout } from '@/components/Layout'
-import Link from 'next/link'
-import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
-import { Form, Formik, FormikErrors, FormikValues } from 'formik'
-import { CircledIconBtn } from '@/components/Buttons/CircledIconBtn'
-import { LoginInput } from '@/components/Inputs/LoginInput'
-import * as Yup from 'yup'
-import axios from 'axios'
-import DotLoaderSpinner from '@/components/Loaders/DotLoader/DotLoader'
 
-const initialValues: FormikValues = {
-  email: '',
-  success: '',
-  error: '',
+import { getCsrfToken, getProviders, getSession } from 'next-auth/react'
+import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import { OAuthProvider } from 'next-auth/providers'
+import { Register } from '@/components/Auth/Register'
+import styles from '@/styles/Forgot.module.scss'
+import { Forgot } from '@/components/Auth/Forgot'
+interface Props {
+  csrfToken: string
 }
-const forgotValidation = Yup.object({
-  email: Yup.string()
-    .required(
-      "You'll need this when you log in and if you ever need to reset your password",
-    )
-    .email('Please enter a valid email address'),
-})
-const ForgotPage = () => {
-  // const [email, setEmail] = useState('')
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
-  const [loading, setLoading] = useState(false)
-  const forgotHandler = async (values: any) => {
-    const { email, error, success } = values
-    try {
-      setLoading(true)
-      const { data } = await axios.post('/api/auth/forgot', {
-        email,
-      })
-      // setUser({ ...values, error: '', success: data.message })
-      setError('')
-      setSuccess(data.message)
-      setLoading(false)
-      // Router.push('/')
-    } catch (error: any) {
-      setLoading(false)
-      setSuccess('')
-      setError(error.response.data.message)
-      // setUser({ ...values, success: '', error: error.response.data.message })
-    }
-  }
+// interface CustomSession extends Session {
+//   user: {
+//     id: string
+//     name: string
+//     email: string
+//     role: string
+//     // Define la estructura del usuario según tus necesidades
+//   }
+//   // Agrega cualquier otro campo personalizado que puedas necesitar
+//   providers: { [key: string]: Provider[] }
+// }
 
+export default function ForgotPage({ csrfToken }: Props) {
+  console.log({ csrfToken })
   let country = {
     name: 'Argentina',
     flag: 'https://cdn.ipregistry.co/flags/emojitwo/ar.svg',
@@ -54,62 +31,26 @@ const ForgotPage = () => {
 
   return (
     <Layout title="Forgot" country={country}>
-      {loading && <DotLoaderSpinner loading={loading} />}
-      <div className={styles.forgot}>
-        <div>
-          <div className={styles.forgot__header}>
-            <div className={styles.back__svg}>
-              <BiLeftArrowAlt />
-            </div>
-            <span>
-              Forgot your password <Link href="/">Login instead</Link>
-            </span>
-          </div>
-
-          <Formik
-            enableReinitialize
-            initialValues={initialValues}
-            validationSchema={forgotValidation}
-            onSubmit={(values) => {
-              forgotHandler(values)
-              // Aquí puedes manejar la lógica de envío de formulario
-              // console.log(values)
-            }}
-          >
-            {(form) => {
-              return (
-                <Form>
-                  <LoginInput
-                    type="text"
-                    name="email"
-                    label="email"
-                    id="email"
-                    icon="email"
-                    placeholder="Email Address"
-                    // onChange={(e: {
-                    //   target: { value: React.SetStateAction<string> }
-                    // }) => setEmail(e.target.value)}
-                    autoComplete="off"
-                  />
-                  <CircledIconBtn
-                    type="submit"
-                    icon={<BiRightArrowAlt />}
-                    text={'Send link'}
-                  />
-                  <div style={{ marginTop: '10px' }}>
-                    {error && <span className={styles.error}>{error}</span>}
-                    {success && (
-                      <span className={styles.success}>{success}</span>
-                    )}
-                  </div>
-                </Form>
-              )
-            }}
-          </Formik>
-        </div>
+      <div className={styles.login}>
+        <Forgot csrfToken={csrfToken} />
       </div>
     </Layout>
   )
 }
 
-export default ForgotPage
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext,
+) => {
+  const csrfToken = await getCsrfToken(context)
+  console.log(csrfToken)
+  const providers = await getProviders()
+  // Convierte el objeto de proveedores en un array de objetos
+  const providerList = Object.keys(providers!).map((key) => ({
+    ...providers![key],
+    id: key,
+  }))
+
+  return {
+    props: { csrfToken },
+  }
+}
