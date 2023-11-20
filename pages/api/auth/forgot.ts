@@ -1,16 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { createRouter, expressWrapper } from 'next-connect'
-console.log('validate email')import
-{ validateEmail } from '@/utils/validation'
+import db from '@/utils/db'
+import { validateEmail } from '@/utils/validation'
 import User from '@/models/User'
 import bcrypt from 'bcrypt'
-console.log('validate emailfindone userpo
-end import { createResetToken, createdActivationToken } from '@/utils/tokens'
+import { createResetToken, createdActivationToken } from '@/utils/tokens'
 import { sendEmail } from '@/utils/sendEmail'
 import { resetEmailTemplate } from '@/emails/resetEmailTemplate'
 
-interfaclog('validate emailfindone userpo
-import {e RequestBody {
+interface RequestBody {
   email: string
 }
 
@@ -26,24 +24,26 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
     if (!email) {
       return res.status(400).json({ message: 'Please fill in all fields.' })
     }
-    console.log('validate email')
+    console.log('valid email')
     if (!validateEmail(email)) {
       return res.status(400).json({ message: 'Invalid email' })
     }
-    console.log('end findone user')
+    console.log('find one user')
     const user = await User.findOne({ email })
     if (!user) {
       return res.status(400).json({ message: 'This email does not exist.' })
     }
-    console.log('findone user')
+    console.log('end find one user')
+    console.log('create reset token')
+
     const token = createResetToken({
       id: user._id.toString(),
     })
-    console.log({id: user._id.toString(),})
     console.log('end create reset token')
+    console.log({ id: user._id.toString() })
+
     const url = `${process.env.BASE_URL}/auth/reset/${token}`
     console.log('email por enviar de reset password')
-
     sendEmail(email, url, '', 'Reset your password.', resetEmailTemplate)
     // res.send(url)
     console.log('envio email')
@@ -72,15 +72,13 @@ export default router.handler({
 //     if (!name || !email || !password) {
 //       return res.status(400).json({ message: 'Please fill in all fields.' })
 //     }
-console.log('validate email')//
-if (!validateEmail(email)) {
+//     console.log(req.body)
+//     if (!validateEmail(email)) {
 //       return res.status(400).json({ message: 'Invalid email' })
 //     }
-console.log('end findone user')
 //   } catch (error) {
 //     res.status(500).json({ message: error.message })
 //   }
 // })
-console.log('findone user')
 
 // export default handler
