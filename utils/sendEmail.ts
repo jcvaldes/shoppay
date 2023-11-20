@@ -26,6 +26,7 @@ export const sendEmail = async (
   url: string,
   txt: string,
   subject: string,
+  template: Function,
 ) => {
   oauth2Client.setCredentials({
     refresh_token: MAILING_SERVICE_REFRESH_TOKEN,
@@ -58,7 +59,7 @@ export const sendEmail = async (
     from: SENDER_EMAIL_ADDRESS,
     to: to,
     subject: subject,
-    html: activateEmailTemplate(to, url),
+    html: template(to, url),
   }
   transporter.sendMail(mailOptions, (err, infos) => {
     if (err) {

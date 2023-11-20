@@ -59,7 +59,6 @@ const Login: React.FC<LoginProps> = ({
   const signInHandler = async (values: FormValues) => {
     const { login_email, login_password } = values
     try {
-      debugger
       setLoading(true)
       let options = {
         redirect: false,

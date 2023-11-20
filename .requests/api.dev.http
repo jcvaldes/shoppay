@@ -7,3 +7,8 @@ Content-Type: application/json
   "email": "idevkings@gmail.com",
   "password": "1234567"
 }
+
+### Activate account
+GET {{url}}/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGE3OTM1ZjUzYzNkNDBkMWJjNWVkYiIsImlhdCI6MTY5OTM3OTUwOSwiZXhwIjoxNjk5NTUyMzA5fQ.sy3plWifWWkqlvHvkLX9BUVe1wlh9dk4ik4GzN0Sfqs
+
+

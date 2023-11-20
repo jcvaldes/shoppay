@@ -4,14 +4,12 @@ import db from '@/utils/db'
 import { validateEmail } from '@/utils/validation'
 import User from '@/models/User'
 import bcrypt from 'bcrypt'
-import { createdActivationToken } from '@/utils/tokens'
+import { createResetToken, createdActivationToken } from '@/utils/tokens'
 import { sendEmail } from '@/utils/sendEmail'
-import { activateEmailTemplate } from '@/emails/activateEmailTemplate'
+import { resetEmailTemplate } from '@/emails/resetEmailTemplate'
 
 interface RequestBody {
-  name: string
   email: string
-  password: string
 }
 
 const router = createRouter<NextApiRequest, NextApiResponse>()
@@ -19,9 +17,9 @@ const router = createRouter<NextApiRequest, NextApiResponse>()
 router.post(async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await db.connectDb()
-    const { name, email, password }: RequestBody = req.body
+    const { email }: RequestBody = req.body
 
-    if (!name || !email || !password) {
+    if (!email) {
       return res.status(400).json({ message: 'Please fill in all fields.' })
     }
     console.log(req.body)
@@ -29,26 +27,18 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(400).json({ message: 'Invalid email' })
     }
     const user = await User.findOne({ email })
-    if (user) {
-      return res.status(400).json({ message: 'This email already exists' })
+    if (!user) {
+      return res.status(400).json({ message: 'This email does not exist.' })
     }
-    if (password.length < 6) {
-      return res
-        .status(400)
-        .json({ message: 'Password must be at least 6 characters' })
-    }
-    const cryptedPassword = await bcrypt.hash(password, 12)
-    const newUser = new User({ name, email, password: cryptedPassword })
-    const addedUser = await newUser.save()
-    const activation_token = createdActivationToken({
-      id: addedUser._id.toString(),
+    const userId = createResetToken({
+      id: user._id.toString(),
     })
-    const url = `${process.env.BASE_URL}/activate/${activation_token}`
-    sendEmail(email, url, '', 'Activate your account.', activateEmailTemplate)
+    const url = `${process.env.BASE_URL}/auth/reset/${userId}`
+    sendEmail(email, url, '', 'Reset your password.', resetEmailTemplate)
     // res.send(url)
     await db.disconnectDb()
     res.json({
-      message: 'Register success! Please activate your email to start',
+      message: 'An email has been sent to you, use it to reset your password',
     })
   } catch (err: any) {
     res.status(500).json({ message: err.message })
