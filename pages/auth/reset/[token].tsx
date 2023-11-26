@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (
       redirect: {
         destination: '/',
       },
-    }
+    } as any
   }
   const token = query.token as string
 
