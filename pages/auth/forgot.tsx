@@ -1,10 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Layout } from '@/components/Layout'
 
-import { getCsrfToken, getProviders, getSession } from 'next-auth/react'
-import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-import { OAuthProvider } from 'next-auth/providers'
-import { Register } from '@/components/Auth/Register'
 import styles from '@/styles/Forgot.module.scss'
 import { Forgot } from '@/components/Auth/Forgot'
 interface Props {
