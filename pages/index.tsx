@@ -4,20 +4,27 @@ import { Country } from '@/models/country.model'
 import { GetServerSideProps } from 'next'
 import { useSession } from 'next-auth/react'
 import { Layout } from '@/components/Layout'
+import styles from '@/styles/Home.module.scss'
+import { Main } from '@/components/Home/Main'
 
 const inter = Inter({ subsets: ['latin'] })
 interface Props {
   country: Country
 }
 
-export default function Home({ country }: Props) {
+export default function HomePage({ country }: Props) {
   const { data: session } = useSession()
   debugger
   return (
     <div>
       {/* <Header country={country} /> */}
       <Layout title="Home" country={country}>
-        {session ? 'you are logged in' : 'not logged in'}
+        {/* {session ? 'you are logged in' : 'not logged in'} */}
+        <div className={styles.home}>
+          <div className={styles.container}>
+            <Main />
+          </div>
+        </div>
       </Layout>
       {/* <Footer country={country} /> */}
     </div>
