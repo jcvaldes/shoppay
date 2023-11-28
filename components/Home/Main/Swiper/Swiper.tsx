@@ -19,6 +19,7 @@ const MainSwiper: React.FC<MainSwiperProps> = () => {
         slidesPerView={1}
         spaceBetween={30}
         loop={true}
+        autoplay={true}
         pagination={{
           clickable: true,
         }}
