@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './styles/Main.module.scss'
 import MainSwiper from './Swiper/Swiper'
+import { Offers } from './Offers'
 export interface MainProps {}
 
 const Main: React.FC<MainProps> = () => {
@@ -9,7 +10,7 @@ const Main: React.FC<MainProps> = () => {
       <div className={styles.header}>header</div>
       <div className={styles.menu}>menu</div>
       <MainSwiper />
-      <div className={styles.offers}>offers</div>
+      <Offers />
       <div className={styles.user}>user</div>
     </div>
   )
